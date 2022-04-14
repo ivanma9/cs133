@@ -2,5 +2,21 @@ For the sequential run, I got the following:
 1024: 
 2048:
 4096: Time: 1.91127 s, Perf: 71.9099 GFlops
+
 For the parallel run, I got the following:
+1024: 
+2048:
+4096: Time: 1.91127 s, Perf: 71.9099 GFlops
+
 For the parallel-blocked run, I got the following:
+1024: 
+2048:
+4096: Time: 1.91127 s, Perf: 71.9099 GFlops
+
+For 1 thread:
+For 2 threads:
+For 4 threads:
+
+When I was trying to optimize the parallel blocked, some thoughts that came to mind were to do loop unrolling and changing the block sizes between the inner loops of blocks and the outer iterative blocks. The first three outer for loops are to create tile sizes from the block sizes. The inner three for loops will iterate through those blocks. My loop unrolling was 4 times. So I performed the sequential of 4 because all the block sizes are multiples of 4.  
+
+Originally, I just used the same block size of k, which was 64, but I figured that the inner loop could be iterated as a larger tile because those iterations will be ran more times. The kI iteration would be the outer loop, the kK would be the middle loop, and the kJ would be the inner loop. This is in order of the matrix multiplication. 
