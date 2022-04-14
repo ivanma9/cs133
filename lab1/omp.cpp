@@ -13,7 +13,6 @@ using std::vector;
 using std::chrono::duration_cast;
 using std::chrono::microseconds;
 using std::chrono::steady_clock;
-// Using declarations, if any...
 
 void GemmParallel(const float a[kI][kK], const float b[kK][kJ],
                   float c[kI][kJ]) {
