@@ -20,7 +20,7 @@ void GemmParallel(const float a[kI][kK], const float b[kK][kJ],
   
 #pragma omp parallel num_threads(8)
 {
-#pragma omp for
+#pragma omp parallel for
   for (int i = 0; i < kI; ++i){
     for (int j = 0; j < kJ; ++j){
       for (int k = 0; k < kK; ++k){
