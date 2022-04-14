@@ -31,26 +31,9 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ],
               for (int jj = j; jj < j2; ++jj) {
                 c[ii][jj] += a[ii][kk] * b[kk][jj];
                 c[ii + 1][jj] += a[ii + 1][kk] * b[kk][jj];
-                c[ii + 2][jj] += a[ii + 2][kk] * b[kk][jj];
-                c[ii + 3][jj] += a[ii + 3][kk] * b[kk][jj];
-
 
                 c[ii][jj] += a[ii][kk + 1] * b[kk + 1][jj];
                 c[ii + 1][jj] += a[ii + 1][kk + 1] * b[kk + 1][jj];
-                c[ii + 2][jj] += a[ii + 2][kk + 1] * b[kk + 1][jj];
-                c[ii + 3][jj] += a[ii + 3][kk + 1] * b[kk + 1][jj];                
-              
-
-                c[ii][jj] += a[ii][kk + 2] * b[kk][jj];
-                c[ii + 1][jj] += a[ii + 1][kk + 2] * b[kk + 2][jj];
-                c[ii + 2][jj] += a[ii + 2][kk + 2] * b[kk + 2][jj];
-                c[ii + 3][jj] += a[ii + 3][kk + 2] * b[kk + 2][jj];
-
-
-                c[ii][jj] += a[ii][kk + 3] * b[kk + 3][jj];
-                c[ii + 1][jj] += a[ii + 1][kk + 3] * b[kk + 3][jj];
-                c[ii + 2][jj] += a[ii + 2][kk + 3] * b[kk + 3][jj];
-                c[ii + 3][jj] += a[ii + 3][kk + 3] * b[kk + 3][jj];  
               }
             }
           }
