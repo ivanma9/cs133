@@ -26,8 +26,8 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ],
           int i2 = i + BLOCK_SIZE;
           int j2 = j + BLOCK_SIZE;
           int k2 = k + inner_BLOCK_SIZE;
-          for (int ii = i; ii < i2; ii += 4) {
-            for (int kk = k; kk < k2; kk += 4) {
+          for (int ii = i; ii < i2; ii += 2) {
+            for (int kk = k; kk < k2; kk += 2) {
               for (int jj = j; jj < j2; ++jj) {
                 c[ii][jj] += a[ii][kk] * b[kk][jj];
                 c[ii + 1][jj] += a[ii + 1][kk] * b[kk][jj];
