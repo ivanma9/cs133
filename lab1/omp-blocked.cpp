@@ -41,7 +41,7 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ],
     std::memset(c[i], 0, sizeof(float) * kJ);
   }
   // block size
-  const int BLOCK_SIZE = 64;
+  int BLOCK_SIZE = 64;
   // matrix multiplication
 #pragma omp parallel numthreads(8)
   {
