@@ -2,12 +2,14 @@
 #include <cmath>
 #include <cstring>
 #include <iostream>
+#include <vector>
 #include <random>
 
 #include "lib/gemm.h"
 
 using std::clog;
 using std::endl;
+using std::vector;
 using std::chrono::duration_cast;
 using std::chrono::microseconds;
 using std::chrono::steady_clock;
@@ -22,9 +24,9 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ],
 #pragma omp for
     for (int i = 0; i < kI; i += BLOCK_SIZE) {
       for (int k = 0; k < kK; k += BLOCK_SIZE) {
-        for (int j = 0; j < kJ; j += BLOCK_SIZE) {
+        for (int j = 0; j < kJ; j += inner_BLOCK_SIZE) {
           int i2 = i + BLOCK_SIZE;
-          int j2 = j + BLOCK_SIZE;
+          int j2 = j + inner_BLOCK_SIZE;
           int k2 = k + BLOCK_SIZE;
           for (int ii = i; ii < i2; ii += 2) {
             for (int kk = k; kk < k2; kk += 2) {
