@@ -1,6 +1,6 @@
 For the sequential run, I got the following:
 1024: 
 2048:
-4096:
+4096: Time: 1.91127 s, Perf: 71.9099 GFlops
 For the parallel run, I got the following:
 For the parallel-blocked run, I got the following:
