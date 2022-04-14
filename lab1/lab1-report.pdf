@@ -15,8 +15,8 @@ For the parallel-blocked run, I got the following:
 
 With 4096:
 For 1 thread:
-For 2 threads:
-For 4 threads:
+For 2 threads: Time: 1
+For 4 threads: Time: 1.23315 s, Perf: 111.453 GFlops
 
 When I was trying to optimize the parallel blocked, some thoughts that came to mind were to do loop unrolling and changing the block sizes between the inner loops of blocks and the outer iterative blocks. The first three outer for loops are to create tile sizes from the block sizes. The inner three for loops will iterate through those blocks. My loop unrolling was 4 times. So I performed the sequential of 4 because all the block sizes are multiples of 4. However, 4 did not end up being correct. 
 Time: 0.587067 s
