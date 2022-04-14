@@ -3,24 +3,17 @@
 #include <cstring>
 #include <iostream>
 #include <random>
-#include <vector>
 
 #include "lib/gemm.h"
 
 using std::clog;
 using std::endl;
-using std::vector;
 using std::chrono::duration_cast;
 using std::chrono::microseconds;
 using std::chrono::steady_clock;
 
 void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ],
                          float c[kI][kJ]) {
-  // setup c
-  // for (int i = 0; i < kI; ++i) {
-  //   std::memset(c[i], 0, sizeof(float) * kJ);
-  // }
-  // block size
   int BLOCK_SIZE = 64;
   // matrix multiplication
 #pragma omp parallel num_threads(8)
@@ -32,8 +25,8 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ],
           int i2 = i + BLOCK_SIZE;
           int j2 = j + BLOCK_SIZE;
           int k2 = k + BLOCK_SIZE;
-          for (int ii = i; ii < i2; ii += 2) {
-            for (int kk = k; kk < k2; kk += 2) {
+          for (int ii = i; ii < i2; ii += 4) {
+            for (int kk = k; kk < k2; kk += 4) {
               for (int jj = j; jj < j2; ++jj) {
                 c[ii][jj] += a[ii][kk] * b[kk][jj];
                 c[ii + 1][jj] += a[ii + 1][kk] * b[kk][jj];
