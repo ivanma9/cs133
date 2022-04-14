@@ -19,7 +19,7 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ],
   int BLOCK_SIZE = 64;
   int inner_BLOCK_SIZE = 1024;
   // matrix multiplication
-#pragma omp parallel num_threads(1)
+#pragma omp parallel num_threads(2)
   {
 #pragma omp for
     for (int i = 0; i < kI; i += BLOCK_SIZE) {
