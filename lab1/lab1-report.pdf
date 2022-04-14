@@ -11,7 +11,7 @@ For the parallel run, I got the following:
 For the parallel-blocked run, I got the following:
 1024: 
 2048:
-4096: Time: 1.91127 s, Perf: 71.9099 GFlops
+4096: Time: 1.2073 s, Perf: 113.84 GFlops
 
 With 4096:
 For 1 thread:
@@ -26,3 +26,4 @@ So, I scaled down loop unrolling to 2, and it hit a sweet spot of being correct 
 
 Originally, I just used the same block size of k, which was 64, but I figured that the inner loop could be iterated as a larger tile because those iterations will be ran more times. The kI iteration would be the outer loop, the kK would be the middle loop, and the kJ would be the inner loop. This is in order of the matrix multiplication. 
 
+Some challenges I ran into was that my code was working with parallel-blocked at one point and then I would optimize it to have higher 
