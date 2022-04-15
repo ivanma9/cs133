@@ -10,13 +10,14 @@ For the parallel run, I got the following:
 
 For the parallel-blocked run, I got the following:
 1024: 
-2048:
+2048: 
 4096: Time: 1.2073 s, Perf: 113.84 GFlops
 
 With 4096:
 For 1 thread: Time: 1.22123 s, Perf: 112.541 GFlops
 For 2 threads: Time: 1.22537 s, Perf: 112.161 GFlops
 For 4 threads: Time: 1.23315 s, Perf: 111.453 GFlops
+I also tried to do it with 16 threads and it was also similar to to the other 4096 implementations.
 
 When I was trying to optimize the parallel blocked, some thoughts that came to mind were to do loop unrolling and changing the block sizes between the inner loops of blocks and the outer iterative blocks. The first three outer for loops are to create tile sizes from the block sizes. The inner three for loops will iterate through those blocks. My loop unrolling was 4 times. So I performed the sequential of 4 because all the block sizes are multiples of 4. However, 4 did not end up being correct. 
 Time: 0.587067 s
@@ -26,4 +27,4 @@ So, I scaled down loop unrolling to 2, and it hit a sweet spot of being correct 
 
 Originally, I just used the same block size of k, which was 64, but I figured that the inner loop could be iterated as a larger tile because those iterations will be ran more times. The kI iteration would be the outer loop, the kK would be the middle loop, and the kJ would be the inner loop. This is in order of the matrix multiplication. 
 
-Some challenges I ran into was that my code was working with parallel-blocked at one point and then I would optimize it to have higher 
+Some challenges I ran into was that my code was working with parallel-blocked at one point and then I would optimize it to have higher throughput and it would be incorrect. I then turned off my instance, and tried the same code the next day and it ended up working. This shows there might not be a consistent reusability with the code I was testing.
