@@ -4,7 +4,7 @@ For the sequential run, I got the following:
 4096: Time: 745.944 s, Perf: 0.184248 GFlops
 
 For the parallel run, I got the following:
-1024: Time: 0.025287 s, Perf: 84.9244 GFlops
+1024: Time: 0.021596 s, Perf: 99.439 GFlops
 2048: Time: 0.181196 s, Perf: 94.8137 GFlops
 4096: Time: 3.22784 s, Perf: 42.5793 GFlops
 
@@ -19,7 +19,7 @@ For 2 threads: Time: 2.60448 s, Perf: 52.7701 GFlops
 For 4 threads: Time: 1.36662 s, Perf: 100.568 GFlops
 I also tried to do it with 16 threads and it was also similar to to the 8 thread implementation.
 
-Some trends I saw were that for sequential, as the problem size increased, the number of GFlops decreased and the throughput decreased, allowing for a longer time to run. For parallel, as the problem size grew, it was a similar trend to the sequential, but the parallel run ran faster than the sequential by a significant amount with a much greater throughput. For the parallel-blocked implementation, the 
+Some trends I saw were that for sequential, as the problem size increased, the number of GFlops decreased and the throughput decreased, allowing for a longer time to run. For parallel, as the problem size grew, it was a similar trend to the sequential, but the parallel run ran faster than the sequential by a significant amount with a much greater throughput though. For the parallel-blocked implementation, the trend was different. As the problem size grew, the time it took increased still, but the throughput also increased. This is probably because the block sizes and the loop unrolling was utilized better in a larger problem size. I feel like the smaller problem size were not able to utilize the full functionality of the block sizes and the loop unrolling.
 
 
 When I was trying to optimize the parallel blocked, some thoughts that came to mind were to do loop unrolling and changing the block sizes between the inner loops of blocks and the outer iterative blocks. The first three outer for loops are to create tile sizes from the block sizes. The inner three for loops will iterate through those blocks. My loop unrolling was 4 times. So I performed the sequential of 4 because all the block sizes are multiples of 4. However, 4 did not end up being correct. 
@@ -28,6 +28,6 @@ Perf: 234.111 GFlops
 This was a lot of GFlops but there was an incorrectness.
 So, I scaled down loop unrolling to 2, and it hit a sweet spot of being correct and a high number of GFlops. 
 
-Originally, I just used the same block size of k, which was 64, but I figured that the inner loop could be iterated as a larger tile because those iterations will be ran more times. The kI iteration would be the outer loop, the kK would be the middle loop, and the kJ would be the inner loop. This is in order of the matrix multiplication. 
+Originally, I just used the same block size of k, which was 64, but I figured that the inner loop could be iterated as a larger tile because those iterations will be ran more times. The kI iteration would be the outer loop, the kK would be the middle loop, and the kJ would be the inner loop. This is in order of the matrix multiplication. Therefore I increased the block size for the inner loop the most, so it would be iterated quicker. The outer loops I kept it at a standard block size because they were just making the rows and columns for the dimensions of the blocks. Did not seem to need a more extensive block size to iterate through.
 
 Some challenges I ran into was that my code was working with parallel-blocked at one point and then I would optimize it to have higher throughput and it would be incorrect. I then turned off my instance, and tried the same code the next day and it ended up working. This shows there might not be a consistent reusability with the code I was testing.
