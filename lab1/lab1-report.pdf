@@ -1,7 +1,7 @@
 For the sequential run, I got the following:
 1024: Time: 3.57945 s, Perf: 0.599948 GFlops
 2048: Time: 61.052 s, Perf: 0.281398 GFlops
-4096: Time: Time: 745.944 s, Perf: 0.184248 GFlops
+4096: Time: 745.944 s, Perf: 0.184248 GFlops
 
 For the parallel run, I got the following:
 1024: Time: 0.025287 s, Perf: 84.9244 GFlops
@@ -11,13 +11,16 @@ For the parallel run, I got the following:
 For the parallel-blocked run, I got the following:
 1024: Time: 0.025776 s, Perf: 83.3133 GFlops
 2048: Time: 0.163342 s, Perf: 105.177 GFlops
-4096: Time: Time: 1.24096 s, Perf: 110.752 GFlops
+4096: Time: 1.24096 s, Perf: 110.752 GFlops
 
 With 4096:
 For 1 thread: Time: 5.22803 s, Perf: 26.2889 GFlops
 For 2 threads: Time: 2.60448 s, Perf: 52.7701 GFlops
 For 4 threads: Time: 1.36662 s, Perf: 100.568 GFlops
 I also tried to do it with 16 threads and it was also similar to to the 8 thread implementation.
+
+Some trends I saw were that for sequential, as the problem size increased, the number of GFlops decreased and the throughput decreased, allowing for a longer time to run. For parallel, as the problem size grew, it was a similar trend to the sequential, but the parallel run ran faster than the sequential by a significant amount with a much greater throughput. For the parallel-blocked implementation, the 
+
 
 When I was trying to optimize the parallel blocked, some thoughts that came to mind were to do loop unrolling and changing the block sizes between the inner loops of blocks and the outer iterative blocks. The first three outer for loops are to create tile sizes from the block sizes. The inner three for loops will iterate through those blocks. My loop unrolling was 4 times. So I performed the sequential of 4 because all the block sizes are multiples of 4. However, 4 did not end up being correct. 
 Time: 0.587067 s
