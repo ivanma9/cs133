@@ -1,10 +1,10 @@
 For the sequential run, I got the following:
-1024: Time: 3.6s, Perf: 0.7 GFlops
+1024: Time: 3.57945 s, Perf: 0.599948 GFlops
 2048: Time: 61s, Perf 0.28 GFlops
 4096: Time: 750 s, Perf: 0.16 GFlops
 
 For the parallel run, I got the following:
-1024: Time 1s, Perf: 1.8434 GFlops 
+1024: Time: 0.025287 s, Perf: 84.9244 GFlops
 2048: Time 15.7s, Perf: 1.13095 GFlops
 4096: Time: 140.2 s, Perf: 0.92324 GFlops
 
