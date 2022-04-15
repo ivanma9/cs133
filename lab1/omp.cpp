@@ -22,7 +22,7 @@ for (int i = 0; i < kI; ++i){
 
 #pragma omp parallel num_threads(8)
 {
-#pragma omp parallel for
+#pragma omp for
   for (int i = 0; i < kI; ++i){
     for (int k = 0; k < kK; ++k){
       for (int j = 0; j < kJ; ++j){
