@@ -14,8 +14,8 @@ For the parallel-blocked run, I got the following:
 4096: Time: Time: 1.32754 s, Perf: 103.529 GFlops
 
 With 4096:
-For 1 thread: Time: 1.22123 s, Perf: 112.541 GFlops
-For 2 threads: Time: 1.22537 s, Perf: 112.161 GFlops
+For 1 thread: Time: 2.59922 s. Perf: 52.8771 GFlops
+For 2 threads: Time: 2.60448 s, Perf: 52.7701 GFlops
 For 4 threads: Time: 1.36662 s, Perf: 100.568 GFlops
 I also tried to do it with 16 threads and it was also similar to to the other 4096 implementations.
 
