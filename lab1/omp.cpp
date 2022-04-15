@@ -16,7 +16,10 @@ using std::chrono::steady_clock;
 
 void GemmParallel(const float a[kI][kK], const float b[kK][kJ],
                   float c[kI][kJ]) {
-  
+for (int i = 0; i < kI; ++i){
+  std::memset(c[i], 0, sizeof(float) * kJ);
+}  
+
 #pragma omp parallel num_threads(8)
 {
 #pragma omp parallel for
