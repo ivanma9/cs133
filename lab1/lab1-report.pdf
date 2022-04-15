@@ -1,17 +1,17 @@
 For the sequential run, I got the following:
 1024: Time: 3.57945 s, Perf: 0.599948 GFlops
 2048: Time: 61.052 s, Perf: 0.281398 GFlops
-4096: Time: 750 s, Perf: 0.16 GFlops
+4096: Time: Time: 745.944 s, Perf: 0.184248 GFlops
 
 For the parallel run, I got the following:
 1024: Time: 0.025287 s, Perf: 84.9244 GFlops
 2048: Time: 0.181196 s, Perf: 94.8137 GFlops
-4096: Time: 140.2 s, Perf: 0.92324 GFlops
+4096: Time: 3.22784 s, Perf: 42.5793 GFlops
 
 For the parallel-blocked run, I got the following:
 1024: Time: 0.025776 s, Perf: 83.3133 GFlops
 2048: Time: 0.163342 s, Perf: 105.177 GFlops
-4096: Time: 1.2073 s, Perf: 113.84 GFlops
+4096: Time: Time: 1.32754 s, Perf: 103.529 GFlops
 
 With 4096:
 For 1 thread: Time: 1.22123 s, Perf: 112.541 GFlops
