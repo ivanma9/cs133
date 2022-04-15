@@ -10,7 +10,7 @@ For the parallel run, I got the following:
 
 For the parallel-blocked run, I got the following:
 1024: 
-2048: 
+2048: Time: 0.163342 s, Perf: 105.177 GFlops
 4096: Time: 1.2073 s, Perf: 113.84 GFlops
 
 With 4096:
