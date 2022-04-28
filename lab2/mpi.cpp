@@ -28,7 +28,7 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ], float c[k
         memset(cBuffer, 0, sizeof(float) * cSize);
 
 
-    // int rowSize = kI / numProcesses;
+    int rowSize = kI / numProcesses;
 
     MPI_Status status;
     if (rank == 0) {
@@ -46,7 +46,7 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ], float c[k
     int kBlockSize = 8;
 
     float tempBuffer;
-    for (int i = 0; i < kI/numProcesses; i += iBlockSize) {
+    for (int i = 0; i < rowSize; i += iBlockSize) {
         for (int k = 0; k < kK; k += kBlockSize) {
             for (int j = 0; j < kJ; j += jBlockSize) {
                 int bi = i + iBlockSize;
