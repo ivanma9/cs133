@@ -25,13 +25,14 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ], float c[k
     float *bBuffer = (float *)lab2::aligned_alloc(1024, bSize * sizeof(float));
     float *cBuffer = (float *)lab2::aligned_alloc(1024, cSize * sizeof(float));
 
-    memset(cBuffer, 0, sizeof(float) * cSize);
+
 
     int rowSize = kI / numProcesses;
 
     /* ------------------------ 1 Using Scatter and Bcast ----------------------- */
     if (rank == 0) {
         memcpy(bBuffer, b, sizeof(float) * bSize);
+        memset(cBuffer, 0, sizeof(float) * cSize);
     }
 
     MPI_Scatter(a, aSize, MPI_FLOAT, aBuffer, aSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
