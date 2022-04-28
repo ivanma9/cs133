@@ -21,31 +21,29 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ], float c[k
     int bSize = kK * kJ;
     int cSize = kI * kJ / numProcesses;
 
-    float *aBuffer = (float *)lab2::aligned_alloc(1024, aSize * sizeof(float));
-    float *bBuffer = (float *)lab2::aligned_alloc(1024, bSize * sizeof(float));
-    float *cBuffer = (float *)lab2::aligned_alloc(1024, cSize * sizeof(float));
+    float *aligned_a = (float *)lab2::aligned_alloc(1024, aSize * sizeof(float));
+    float *aligned_b = (float *)lab2::aligned_alloc(1024, bSize * sizeof(float));
+    float *aligned_c = (float *)lab2::aligned_alloc(1024, cSize * sizeof(float));
 
-        memset(cBuffer, 0, sizeof(float) * cSize);
+        memset(aligned_c, 0, sizeof(float) * cSize);
 
-
-    int rowSize = kI / numProcesses;
-
-    MPI_Status status;
     if (rank == 0) {
-        memcpy(bBuffer, b, sizeof(float) * bSize);
+        memcpy(aligned_b, b, sizeof(float) * bSize);
         for (int i = 1; i < numProcesses; i++) {
             MPI_Send(b, bSize, MPI_FLOAT, i, 2, MPI_COMM_WORLD);
         }
     } else {
-        MPI_Recv(bBuffer, bSize, MPI_FLOAT, 0, 2, MPI_COMM_WORLD, &status);
+        MPI_Recv(aligned_b, bSize, MPI_FLOAT, 0, 2, MPI_COMM_WORLD, &status);
     }
-    MPI_Scatter(a, aSize, MPI_FLOAT, aBuffer, aSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Scatter(a, aSize, MPI_FLOAT, aligned_a, aSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
     int iBlockSize = 32;
     int jBlockSize = 128;
     int kBlockSize = 8;
 
-    float tempBuffer;
+    float temp_buffer;
+    int rowSize = kI / numProcesses;
+
     for (int i = 0; i < rowSize; i += iBlockSize) {
         for (int k = 0; k < kK; k += kBlockSize) {
             for (int j = 0; j < kJ; j += jBlockSize) {
@@ -55,18 +53,18 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ], float c[k
 
                 for (int ii = i; ii < bi; ii++) {
                     for (int jj = j; jj < bj; jj++) {
-                        tempBuffer = 0;
+                        temp_buffer = 0;
 
                         for (int kk = k; kk < bk; kk++) {
-                            tempBuffer += aBuffer[ii * kJ + kk] * bBuffer[kk * kJ + jj];
+                            temp_buffer += aligned_a[ii * kJ + kk] * aligned_b[kk * kJ + jj];
                         }
 
-                        cBuffer[ii * kJ + jj] += tempBuffer;
+                        aligned_c[ii * kJ + jj] += temp_buffer;
                     }
                 }
             }
         }
     }
 
-    MPI_Gather(cBuffer, cSize, MPI_FLOAT, c, cSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Gather(aligned_c, cSize, MPI_FLOAT, c, cSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
 }
