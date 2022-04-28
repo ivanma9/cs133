@@ -27,6 +27,9 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ], float c[k
 
         memset(aligned_c, 0, sizeof(float) * cSize);
 
+
+
+    MPI_Status status;
     if (rank == 0) {
         memcpy(aligned_b, b, sizeof(float) * bSize);
         for (int i = 1; i < numProcesses; i++) {
