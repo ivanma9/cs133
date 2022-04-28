@@ -121,7 +121,7 @@ void GemmParallelBlocked(const float a[kI][kK], const float b[kK][kJ], float c[k
     }
 
     /* ----------------------------- 1 Using gather ----------------------------- */
-    MPI_Gather(cBuffer, cSize, MPI_FLOAT, c, cSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    // MPI_Gather(cBuffer, cSize, MPI_FLOAT, c, cSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
     /* ----------------------- 2 Using Isend, Irecv, Wait ----------------------- */
     // if (rank == 0) {
